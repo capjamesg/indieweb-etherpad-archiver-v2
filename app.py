@@ -86,8 +86,7 @@ def get_etherpad_contents(source_url):
         etherpad_url=etherpad_url,
     ) + "\n" + etherpad_contents
 
-    etherpad_contents += """
-[[Category:Events]]"""
+    etherpad_contents += """\n[[Category:Events]]\n"""
 
     for pattern, category in CATEGORIES_REGISTER.items():
         if pattern in etherpad_url:
