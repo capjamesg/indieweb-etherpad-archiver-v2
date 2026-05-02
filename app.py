@@ -4,6 +4,7 @@ import re
 import pydle
 import requests
 from bs4 import BeautifulSoup
+from urllib.parse import urlparse as url_parse
 
 MEDIAWIKI_URL = os.environ.get("MEDIAWIKI_URL")
 LGNAME = os.environ.get("LGNAME")
@@ -74,6 +75,15 @@ def get_etherpad_contents(source_url):
     etherpad_contents_url = etherpad_url + "/export/txt"
 
     etherpad_contents = requests.get(etherpad_contents_url).text
+
+    for word in list(set(etherpad_contents.split(" "))):
+        if word.startswith("https://indieweb.org/"):
+            try:
+                parsed_url = url_parse(word)
+            except:
+                continue
+    
+            etherpad_contents = etherpad_contents.replace(word, f"[[{parsed_url.path.lstrip('/')}]]")
 
     etherpad_slug = etherpad_url.split(ETHERPAD_DOMAIN + "/")[-1]
 
