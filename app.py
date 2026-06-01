@@ -22,8 +22,8 @@ WIKI_PAGE_HEADER = """
 
 CATEGORIES_REGISTER = {
     "front-end-study-hall": "[[Category:Front_end]]\n{{Front End Study Hall|date={date}}}\n",
-    "-photos-": "[[Category:Photos]]",
-    "-writing-": "[[Category:Writing]]",
+    "-photos": "[[Category:Photos]]",
+    "-writing": "[[Category:Writing]]",
     "-hwc-": "{{Homebrew Website Club}}",
 }
 
