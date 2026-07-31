@@ -76,7 +76,7 @@ def get_etherpad_contents(source_url):
 
     etherpad_contents = requests.get(etherpad_contents_url).text
 
-    for word in list(set(etherpad_contents.split(" "))):
+    for word in list(set(re.split(r"\s+", etherpad_contents))):
         if word.startswith("https://indieweb.org/"):
             try:
                 parsed_url = url_parse(word)
