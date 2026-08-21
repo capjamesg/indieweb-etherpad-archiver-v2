@@ -159,7 +159,7 @@ class Bot(pydle.Client):
             create_wiki_page(csrf_token, etherpad_contents, slug)
             await self.message(
                 target,
-                f"Created https://indieweb.org/events/{etherpad_slug.strip('/')}. Please review the page to ensure the document is correctly formatted and remove any unnecessary text.",
+                f"Created https://indieweb.org/events/{slug.strip('/')}. Please review the page to ensure the document is correctly formatted and remove any unnecessary text.",
             )
 
 
