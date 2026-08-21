@@ -129,7 +129,7 @@ class Bot(pydle.Client):
         if source != self.nickname and message.startswith("!archive"):
             if message.strip() == "!archive help":
                 await self.message(
-                    target, "Usage: !archive <event page URL>"
+                    target, "Usage: !archive <event page URL, required> <slug for wiki page, optional>"
                 )
                 return
 
@@ -139,17 +139,24 @@ class Bot(pydle.Client):
 
             csrf_token = get_csrf_token()
             etherpad_contents, etherpad_slug = get_etherpad_contents(event_url)
+            
+            if len(message.split(" ")) > 2:
+                slug = message.split(" ")[2]
+            else:
+                slug = etherpad_slug
+
+            slug = slug.strip().strip("/").strip()
 
             if (
                 requests.get(
-                    "https://indieweb.org/events/" + etherpad_slug.strip("/")
+                    "https://indieweb.org/events/" + slug.strip("/")
                 ).status_code
                 == 200
             ):
                 await self.message(target, "These notes have already been archived.")
                 return
 
-            create_wiki_page(csrf_token, etherpad_contents, etherpad_slug)
+            create_wiki_page(csrf_token, etherpad_contents, slug)
             await self.message(
                 target,
                 f"Created https://indieweb.org/events/{etherpad_slug.strip('/')}. Please review the page to ensure the document is correctly formatted and remove any unnecessary text.",
